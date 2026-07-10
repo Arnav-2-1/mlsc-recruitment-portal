@@ -6,7 +6,6 @@ import { Home } from './pages/Home';
 import { Instructions } from './pages/Instructions';
 import { Quiz } from './pages/Quiz';
 import { Result } from './pages/Result';
-// ✨ IMPORT THE NEW DEVICE BLOCKER
 import { DeviceBlocker } from './components/common/DeviceBlocker';
 
 function App() {
@@ -24,20 +23,34 @@ function App() {
       e.preventDefault();
     };
 
+    // ✨ 3. CLIPBOARD LOCKDOWN: Prevent Copy, Paste, and Cut actions entirely
+    const handleClipboardAction = (e) => {
+      e.preventDefault();
+    };
+
     // Bind layout listeners at the absolute root level with passive: false
     window.addEventListener('wheel', handleWheelZoom, { passive: false });
     document.addEventListener('contextmenu', handleContextMenu);
+    
+    // Bind clipboard listeners
+    document.addEventListener('copy', handleClipboardAction);
+    document.addEventListener('paste', handleClipboardAction);
+    document.addEventListener('cut', handleClipboardAction);
 
     return () => {
       window.removeEventListener('wheel', handleWheelZoom);
       document.removeEventListener('contextmenu', handleContextMenu);
+      
+      // Cleanup clipboard listeners
+      document.removeEventListener('copy', handleClipboardAction);
+      document.removeEventListener('paste', handleClipboardAction);
+      document.removeEventListener('cut', handleClipboardAction);
     };
   }, []);
 
   return (
     <ExamProvider>
       <BrowserRouter>
-        {/* ✨ WRAP YOUR ENTIRE LAYOUT CONTAINER IN THE DEVICE BLOCKER */}
         <DeviceBlocker>
           <div className="min-h-screen bg-[#020617] text-slate-100 flex flex-col">
             <Navbar />
