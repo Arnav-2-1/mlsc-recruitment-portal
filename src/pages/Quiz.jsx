@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useExam } from '../context/ExamContext';
 import { PageContainer } from '../components/layout/PageContainer';
@@ -21,17 +21,39 @@ export const Quiz = () => {
     () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement)
   );
 
+  // ✨ ANTI-RACE CONDITION LOCK: Prevents multiple events from triggering at the exact same millisecond
+  const lastViolationTime = useRef(0);
+
   useEffect(() => {
     if (!candidate) navigate('/');
     else if (!examStarted) navigate('/instructions');
     else if (examCompleted) navigate('/result');
   }, [candidate, examStarted, examCompleted, navigate]);
 
- useEffect(() => {
+  useEffect(() => {
     if (!examStarted || examCompleted) return;
 
-    const handleVisibilityChange = () => { if (document.hidden) triggerWarning("Tab Switch Detected"); };
-    const handleBlur = () => triggerWarning("Window Blur Detected");
+    // Helper wrapper to ensure warnings can only trigger once every 1.5 seconds
+    const safeTriggerWarning = (reason) => {
+      const now = Date.now();
+      if (now - lastViolationTime.current > 1500) { 
+        lastViolationTime.current = now;
+        triggerWarning(reason);
+      }
+    };
+
+    const handleVisibilityChange = () => { 
+      if (document.hidden) safeTriggerWarning("Tab Switch Detected"); 
+    };
+    
+    const handleBlur = () => {
+      // Small timeout ensures alert dialog box blurs don't trigger false positives
+      setTimeout(() => {
+        if (!document.hasFocus() && !examCompleted) {
+          safeTriggerWarning("Window Blur Detected");
+        }
+      }, 200);
+    };
     
     const handleFullscreenChange = () => {
       const activeElement = document.fullscreenElement || 
@@ -43,7 +65,7 @@ export const Quiz = () => {
       setIsFullscreenActive(checkFullscreen);
 
       if (!checkFullscreen && !examCompleted) {
-        triggerWarning("Exited Fullscreen Mode");
+        safeTriggerWarning("Exited Fullscreen Mode");
       }
     };
 
@@ -82,6 +104,7 @@ export const Quiz = () => {
       document.removeEventListener('contextmenu', handleContextMenu);
     };
   }, [examStarted, examCompleted]);
+
   // Function to lock fullscreen mode again post-refresh
   const handleRestoreFullscreen = async () => {
     const element = document.documentElement;
