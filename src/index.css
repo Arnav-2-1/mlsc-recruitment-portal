@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-main: #0a0f1d;
+    --bg-surface: #111827;
+    --bg-surface-hover: #1f2937;
+    
+    --border-color: #1f2937;
+    --border-accent: #3b82f6;
+    
+    --text-primary: #f9fafb;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+  }
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+@layer base {
+  html, body {
+    /* 1. Stops 2-finger touchpad swipe back/forward navigation dead in its tracks */
+    overscroll-behavior-x: none;
+    
+    /* 2. Disables double-tap to zoom and structural multi-touch scaling */
+    touch-action: manipulation;
+    
+    /* 3. Disables text highlighting while interacting */
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
