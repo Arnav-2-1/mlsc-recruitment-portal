@@ -8,6 +8,46 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- ✨ NEW FEATURE 2: NATIVE JAVASCRIPT DETECTOR & LOCKDOWN -->
+    <noscript>
+      <style>
+        /* Immediately hide the React application mount node */
+        #root { 
+          display: none !important; 
+        }
+      </style>
+      
+      <!-- Display a secure, full-screen hardware-level fallback container -->
+      <div style="position: fixed; inset: 0; background-color: #020617; color: #f1f5f9; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 24px; text-align: center; z-index: 999999;">
+        
+        <!-- Red Shield Alert Vector Icon Container -->
+        <div style="width: 64px; height: 64px; background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+
+        <h1 style="font-size: 24px; font-weight: 900; letter-spacing: -0.025em; margin-bottom: 8px; color: #ffffff;">
+          JavaScript Activation Required
+        </h1>
+        
+        <p style="font-size: 11px; font-weight: 600; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;">
+          Microsoft Learn Student Chapter
+        </p>
+
+        <p style="font-size: 14px; color: #94a3b8; max-width: 420px; line-height: 1.625; margin-bottom: 24px;">
+          To preserve evaluation integrity, real-time proctoring metrics, and platform security protocols, this assessment cannot compile without active script parsing. 
+        </p>
+
+        <div style="font-size: 12px; font-family: monospace; color: #64748b; background-color: rgba(15, 23, 42, 0.6); padding: 8px 16px; border-radius: 12px; border: 1px solid rgba(51, 65, 85, 0.6);">
+          Please enable JavaScript in your browser preferences to gain access.
+        </div>
+      </div>
+    </noscript>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
