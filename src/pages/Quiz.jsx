@@ -24,6 +24,26 @@ export const Quiz = () => {
   // ✨ ANTI-RACE CONDITION LOCK: Prevents multiple events from triggering at the exact same millisecond
   const lastViolationTime = useRef(0);
 
+  // ✨ INSTANT POST-REFRESH SWIPE LOCK: Executes immediately when component loads
+  useEffect(() => {
+    // Disable overscroll behaviors on the root body element programmatically on refresh mount
+    document.documentElement.style.overscrollBehavior = 'none';
+    document.body.style.overscrollBehavior = 'none';
+
+    // Push dummy states into browser history stack to break horizontal swiping navigation mechanisms
+    window.history.pushState(null, null, window.location.href);
+    const handlePopState = () => {
+      window.history.pushState(null, null, window.location.href);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      document.documentElement.style.overscrollBehavior = '';
+      document.body.style.overscrollBehavior = '';
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   useEffect(() => {
     if (!candidate) navigate('/');
     else if (!examStarted) navigate('/instructions');
@@ -127,9 +147,10 @@ export const Quiz = () => {
   if (!candidate || !examStarted) return null;
 
   // INTERCEPTOR VIEWPORT: Triggered if the student reloads the page or escapes fullscreen
+  // Added overscroll-none utilities here to keep it disabled even when stuck on the interceptor screen
   if (!isFullscreenActive && !examCompleted) {
     return (
-      <div className="fixed inset-0 z-50 bg-[#020617] flex items-center justify-center p-6 select-none">
+      <div className="fixed inset-0 z-50 bg-[#020617] flex items-center justify-center p-6 select-none overscroll-none touch-none">
         <Card className="max-w-md w-full border-slate-800 bg-slate-900/40 text-center p-8 shadow-2xl">
           <div className="mx-auto w-12 h-12 bg-amber-500/10 border border-amber-500/20 rounded-xl flex items-center justify-center text-amber-400 mb-4">
             <ShieldAlert className="w-6 h-6 animate-pulse" />
@@ -147,9 +168,10 @@ export const Quiz = () => {
   }
 
   // STANDARD VIEWPORT: Shown when everything is operating securely
+  // Injected overscroll-none and touch-none layout properties globally
   return (
-    <div className="w-full min-h-[calc(100vh-65px)] flex flex-col justify-between bg-[#020617]">
-      <PageContainer className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 py-6">
+    <div className="w-full min-h-[calc(100vh-65px)] flex flex-col justify-between bg-[#020617] overscroll-none touch-none">
+      <PageContainer className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 py-6 overscroll-none">
         <div className="lg:col-span-2"><QuestionCard /></div>
         <div className="space-y-4">
           <TimerCard />
