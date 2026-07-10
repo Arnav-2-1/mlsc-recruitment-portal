@@ -6,6 +6,8 @@ import { Home } from './pages/Home';
 import { Instructions } from './pages/Instructions';
 import { Quiz } from './pages/Quiz';
 import { Result } from './pages/Result';
+// ✨ IMPORT THE NEW DEVICE BLOCKER
+import { DeviceBlocker } from './components/common/DeviceBlocker';
 
 function App() {
   
@@ -35,16 +37,19 @@ function App() {
   return (
     <ExamProvider>
       <BrowserRouter>
-        <div className="min-h-screen bg-[#020617] text-slate-100 flex flex-col">
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/instructions" element={<Instructions />} />
-            <Route path="/quiz" element={<Quiz />} />
-            <Route path="/result" element={<Result />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </div>
+        {/* ✨ WRAP YOUR ENTIRE LAYOUT CONTAINER IN THE DEVICE BLOCKER */}
+        <DeviceBlocker>
+          <div className="min-h-screen bg-[#020617] text-slate-100 flex flex-col">
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/instructions" element={<Instructions />} />
+              <Route path="/quiz" element={<Quiz />} />
+              <Route path="/result" element={<Result />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
+        </DeviceBlocker>
       </BrowserRouter>
     </ExamProvider>
   );
