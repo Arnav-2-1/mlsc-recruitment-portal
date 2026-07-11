@@ -7,7 +7,8 @@ import { Button } from '../components/common/Button';
 import mlsaLogo from '../assets/mlsa-logo.png'; // Path to your logo asset
 
 export const Instructions = () => {
-  const { candidate, setExamStarted } = useExam();
+  // ✨ Added "questions" extraction from useExam context to dynamically get total length
+  const { candidate, setExamStarted, questions } = useExam();
   const navigate = useNavigate();
   const [agreed, setAgreed] = useState(false);
 
@@ -28,7 +29,10 @@ export const Instructions = () => {
 
   const handleStartExam = async () => {
     await launchFullscreen();
-    setExamStarted(true);
+    
+    // ✨ Invokes your Fisher-Yates array randomizer layer seamlessly right before navigating
+    setExamStarted(); 
+    
     navigate('/quiz');
   };
 
@@ -50,7 +54,8 @@ export const Instructions = () => {
         </div>
         
         <div className="flex gap-4 font-mono text-[11px] text-slate-400 bg-slate-900/50 px-3 py-2 rounded border border-slate-800">
-          <div>QUESTIONS: <span className="text-white font-semibold">20</span></div>
+          {/* ✨ Dynamic question array length tracking output replaces hardcoded 20 values */}
+          <div>QUESTIONS: <span className="text-white font-semibold">{questions?.length || 15}</span></div>
           <div className="w-px bg-slate-800" />
           <div>DURATION: <span className="text-white font-semibold">30 MINS</span></div>
         </div>

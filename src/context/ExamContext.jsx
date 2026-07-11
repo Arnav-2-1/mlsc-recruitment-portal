@@ -10,6 +10,13 @@ export const ExamProvider = ({ children }) => {
   });
   const [examStarted, setExamStarted] = useState(() => localStorage.getItem('mlsc_exam_started') === 'true');
   const [examCompleted, setExamCompleted] = useState(() => localStorage.getItem('mlsc_exam_completed') === 'true');
+  
+  // ✨ UPDATED: Load the shuffled questions array from localStorage if it exists, otherwise start empty
+  const [questions, setQuestions] = useState(() => {
+    const savedQuestions = localStorage.getItem('mlsc_shuffled_questions');
+    return savedQuestions ? JSON.parse(savedQuestions) : [];
+  });
+
   const [responses, setResponses] = useState(() => {
     const saved = localStorage.getItem('mlsc_responses');
     return saved ? JSON.parse(saved) : {};
@@ -30,9 +37,10 @@ export const ExamProvider = ({ children }) => {
   const [showSecurityModal, setShowSecurityModal] = useState(false);
   const [securityViolationType, setSecurityViolationType] = useState('');
 
-  // ✨ COMPUTED VALUE: Automatically gets the full question object based on the current index
-  const currentQuestion = mockQuestions[currentQuestionIndex] || null;
+  // Computed question helper maps cleanly to our active shuffled pool
+  const currentQuestion = questions[currentQuestionIndex] || null;
 
+  // Sync state modifications
   useEffect(() => {
     if (candidate) localStorage.setItem('mlsc_candidate', JSON.stringify(candidate));
     else localStorage.removeItem('mlsc_candidate');
@@ -43,6 +51,15 @@ export const ExamProvider = ({ children }) => {
   useEffect(() => { localStorage.setItem('mlsc_responses', JSON.stringify(responses)); }, [responses]);
   useEffect(() => { localStorage.setItem('mlsc_review', JSON.stringify(reviewStatus)); }, [reviewStatus]);
   useEffect(() => { localStorage.setItem('mlsc_time_left', timeLeft); }, [timeLeft]);
+
+  // ✨ NEW: Keep the shuffled question array saved on browser reloads
+  useEffect(() => {
+    if (questions.length > 0) {
+      localStorage.setItem('mlsc_shuffled_questions', JSON.stringify(questions));
+    } else {
+      localStorage.removeItem('mlsc_shuffled_questions');
+    }
+  }, [questions]);
 
   useEffect(() => {
     localStorage.setItem('mlsc_warnings', securityWarnings);
@@ -68,6 +85,39 @@ export const ExamProvider = ({ children }) => {
     return () => clearInterval(timer);
   }, [examStarted, examCompleted, timeLeft]);
 
+  // ✨ UPDATED: Shuffles questions using the Durstenfeld/Fisher-Yates Shuffle Algorithm
+  const startExam = (selectedAdminQuestions = mockQuestions) => {
+    // 1. Take the 15 questions selected from your pool
+    let pool = [...selectedAdminQuestions];
+    
+    // 2. Shuffle them in-place randomly
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+
+    // 3. Optional Bonus: If you want to jumble the options inside the questions as well!
+    const randomizedPool = pool.map(q => {
+      let optionsCopy = [...q.options];
+      // Keep track of where the correct answer goes if you score on frontend
+      const originalCorrectText = q.options[q.correctAnswer]; 
+      
+      for (let i = optionsCopy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [optionsCopy[i], optionsCopy[j]] = [optionsCopy[j], optionsCopy[i]];
+      }
+
+      return {
+        ...q,
+        options: optionsCopy,
+        correctAnswer: originalCorrectText ? optionsCopy.indexOf(originalCorrectText) : q.correctAnswer
+      };
+    });
+
+    setQuestions(randomizedPool);
+    setExamStarted(true);
+  };
+
   const triggerWarning = (type) => {
     if (!examStarted || examCompleted) return;
     setSecurityViolationType(type);
@@ -85,6 +135,7 @@ export const ExamProvider = ({ children }) => {
     setCandidate(null);
     setExamStarted(false);
     setExamCompleted(false);
+    setQuestions([]);
     setResponses({});
     setReviewStatus({});
     setCurrentQuestionIndex(0);
@@ -95,12 +146,12 @@ export const ExamProvider = ({ children }) => {
 
   return (
     <ExamContext.Provider value={{
-      candidate, setCandidate, examStarted, setExamStarted, examCompleted, setExamCompleted,
+      candidate, setCandidate, examStarted, setExamStarted: startExam, examCompleted, setExamCompleted,
       responses, setResponses, reviewStatus, setReviewStatus, currentQuestionIndex, setCurrentQuestionIndex,
       timeLeft, setTimeLeft, securityWarnings, triggerWarning, showSecurityModal, setShowSecurityModal,
-      securityViolationType, completeExam, resetExamData, 
-      questions: mockQuestions,
-      currentQuestion // ✨ EXPOSED THE ACTIVE QUESTION OBJECT HERE FOR THE UI LAYOUT
+      securityViolationType, completeExam, resetExamData,
+      questions,
+      currentQuestion
     }}>
       {children}
     </ExamContext.Provider>
