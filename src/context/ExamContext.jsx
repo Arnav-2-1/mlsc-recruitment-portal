@@ -30,6 +30,9 @@ export const ExamProvider = ({ children }) => {
   const [showSecurityModal, setShowSecurityModal] = useState(false);
   const [securityViolationType, setSecurityViolationType] = useState('');
 
+  // ✨ COMPUTED VALUE: Automatically gets the full question object based on the current index
+  const currentQuestion = mockQuestions[currentQuestionIndex] || null;
+
   useEffect(() => {
     if (candidate) localStorage.setItem('mlsc_candidate', JSON.stringify(candidate));
     else localStorage.removeItem('mlsc_candidate');
@@ -95,7 +98,9 @@ export const ExamProvider = ({ children }) => {
       candidate, setCandidate, examStarted, setExamStarted, examCompleted, setExamCompleted,
       responses, setResponses, reviewStatus, setReviewStatus, currentQuestionIndex, setCurrentQuestionIndex,
       timeLeft, setTimeLeft, securityWarnings, triggerWarning, showSecurityModal, setShowSecurityModal,
-      securityViolationType, completeExam, resetExamData, questions: mockQuestions
+      securityViolationType, completeExam, resetExamData, 
+      questions: mockQuestions,
+      currentQuestion // ✨ EXPOSED THE ACTIVE QUESTION OBJECT HERE FOR THE UI LAYOUT
     }}>
       {children}
     </ExamContext.Provider>

@@ -1,5 +1,11 @@
 export const mockQuestions = [
-  { id: 1, section: "Technical", text: "Which of the following data structures uses the LIFO (Last In First Out) principle?", options: ["Queue", "Stack", "Array", "Linked List"], correctAnswer: 1 },
+  {
+    id: 1,
+    questionText: "What is the computational complexity output here?",
+    imageUrl: "/questions/sample-diagram.png", // Leave as null if no image is needed
+    options: ["O(1)", "O(n)", "O(log n)"],
+    correctAnswer: 1
+  },
   { id: 2, section: "Technical", text: "What is the time complexity of searching in a perfectly balanced Binary Search Tree?", options: ["O(1)", "O(n)", "O(log n)", "O(n log n)"], correctAnswer: 2 },
   { id: 3, section: "Technical", text: "In React, what hook would you use to perform side effects in a functional component?", options: ["useState", "useMemo", "useContext", "useEffect"], correctAnswer: 3 },
   { id: 4, section: "Technical", text: "Which HTTP status code represents 'Unauthorized access'?", options: ["400 Bad Request", "401 Unauthorized", "403 Forbidden", "404 Not Found"], correctAnswer: 1 },

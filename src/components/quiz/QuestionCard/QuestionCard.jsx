@@ -15,7 +15,22 @@ export const QuestionCard = () => {
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Question {currentQuestionIndex + 1} of {questions.length}</span>
           <Badge variant="info">{currentQuestion.section}</Badge>
         </div>
+        
         <p className="text-base font-semibold text-slate-200 leading-relaxed mb-6 select-none">{currentQuestion.text}</p>
+        
+        {/* ✨ NEW FEATURE: CONDITIONAL IMAGE COMPONENT */}
+        {currentQuestion.imageUrl && (
+          <div className="w-full bg-slate-950/50 border border-slate-800/60 rounded-xl p-4 mb-6 flex justify-center items-center overflow-hidden">
+            <img 
+              src={currentQuestion.imageUrl} 
+              alt="Question illustration reference" 
+              /* Anti-Cheat: Stops users from dragging or right-clicking the diagram */
+              className="max-h-[240px] w-auto object-contain rounded-lg shadow-md select-none pointer-events-none"
+              loading="lazy"
+            />
+          </div>
+        )}
+
         <div className="space-y-3">
           {currentQuestion.options.map((option, idx) => {
             const isSelected = responses[currentQuestion.id] === idx;
@@ -31,4 +46,4 @@ export const QuestionCard = () => {
       </div>
     </Card>
   );
-};
+};;
