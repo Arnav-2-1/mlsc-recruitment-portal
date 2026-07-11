@@ -14,41 +14,41 @@ export const SubmitModal = ({ isOpen, onClose }) => {
   const unansweredCount = totalQuestions - answeredCount;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm select-none animate-fadeIn">
-      <Card className="max-w-md w-full border-slate-800 bg-slate-950 p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#111827]/30 backdrop-blur-sm select-none animate-fadeIn">
+      <Card className="max-w-md w-full border-[#E5E7EB] bg-white p-6 shadow-2xl">
         {/* Header Icon & Title */}
-        <div className="flex items-center gap-3 text-blue-400 mb-5">
-          <div className="p-2 bg-blue-500/10 border border-blue-500/20 rounded-xl">
-            <HelpCircle className="w-6 h-6 text-blue-400" />
+        <div className="flex items-center gap-3 text-[#0067B8] mb-5">
+          <div className="p-2 bg-[#0067B8]/10 border border-[#0067B8]/15 rounded-xl">
+            <HelpCircle className="w-6 h-6 text-[#0067B8]" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-slate-100 tracking-wide">Submit Examination</h3>
-            <p className="text-xs text-slate-400">Please review your submission summary below.</p>
+            <h3 className="text-base font-bold text-[#111827] tracking-wide">Submit Examination</h3>
+            <p className="text-xs text-[#6B7280]">Please review your submission summary below.</p>
           </div>
         </div>
         
         {/* Live Summary Grid */}
         <div className="grid grid-cols-2 gap-3 mb-6">
-          <div className="p-3 bg-slate-900/60 border border-slate-800 rounded-lg flex items-center gap-2.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+          <div className="p-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-lg flex items-center gap-2.5">
+            <CheckCircle2 className="w-4 h-4 text-[#059669] flex-shrink-0" />
             <div>
-              <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">Answered</p>
-              <p className="text-sm font-bold text-slate-200 font-mono">{answeredCount} / {totalQuestions}</p>
+              <p className="text-[10px] uppercase tracking-wider font-bold text-[#6B7280]">Answered</p>
+              <p className="text-sm font-bold text-[#111827] font-mono">{answeredCount} / {totalQuestions}</p>
             </div>
           </div>
           
-          <div className="p-3 bg-slate-900/60 border border-slate-800 rounded-lg flex items-center gap-2.5">
-            <AlertCircle className={`w-4 h-4 flex-shrink-0 ${unansweredCount > 0 ? 'text-amber-400' : 'text-slate-500'}`} />
+          <div className="p-3 bg-[#F8FAFC] border border-[#E5E7EB] rounded-lg flex items-center gap-2.5">
+            <AlertCircle className={`w-4 h-4 flex-shrink-0 ${unansweredCount > 0 ? 'text-[#b45309]' : 'text-[#6B7280]'}`} />
             <div>
-              <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">Unanswered</p>
-              <p className={`text-sm font-bold font-mono ${unansweredCount > 0 ? 'text-amber-400' : 'text-slate-400'}`}>{unansweredCount}</p>
+              <p className="text-[10px] uppercase tracking-wider font-bold text-[#6B7280]">Unanswered</p>
+              <p className={`text-sm font-bold font-mono ${unansweredCount > 0 ? 'text-[#b45309]' : 'text-[#6B7280]'}`}>{unansweredCount}</p>
             </div>
           </div>
         </div>
 
         {/* Warning Policy Context */}
-        <p className="text-xs text-slate-400 leading-relaxed bg-slate-900/40 border border-slate-900 p-3 rounded-lg mb-6">
-          ⚠️ <span className="text-slate-300 font-medium">Important Note:</span> Once submitted, you will not be able to re-enter this assessment or modify your answers. Your progress will be saved instantly.
+        <p className="text-xs text-[#6B7280] leading-relaxed bg-[#FFFBEB] border border-[#FDE68A] p-3 rounded-lg mb-6">
+          ⚠️ <span className="text-[#374151] font-medium">Important Note:</span> Once submitted, you will not be able to re-enter this assessment or modify your answers. Your progress will be saved instantly.
         </p>
 
         {/* Action Buttons */}

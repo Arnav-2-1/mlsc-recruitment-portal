@@ -35,34 +35,37 @@ export const TimerCard = () => {
   const rotationDegrees = (timeLeft / totalDuration) * 360;
 
   // Color logic matching your system benchmarks
-  let clockThemeColor = 'text-emerald-400 stroke-emerald-400';
+  let clockThemeColor = 'text-emerald-500 stroke-emerald-500';
+  let digitsColor = 'text-[#059669]'; // Safe green
   let pulseOverlay = '';
 
   if (percentageLeft <= 15) {
     clockThemeColor = 'text-rose-500 stroke-rose-500';
+    digitsColor = 'text-[#DC2626]'; // Critical red
     pulseOverlay = 'animate-pulse bg-rose-500/5 absolute inset-1 rounded-full';
   } else if (percentageLeft <= 35) {
     clockThemeColor = 'text-amber-500 stroke-amber-500';
+    digitsColor = 'text-[#D97706]'; // Warning orange/amber
   }
 
   return (
-    <Card className="p-6 border-slate-800 bg-[#040814] relative overflow-hidden select-none">
+    <Card className="p-6 border-[#E5E7EB] bg-white relative overflow-hidden select-none">
       <div className="flex items-center justify-between">
         
         {/* Left Side: Layout Data */}
         <div className="space-y-3">
-          <div className="flex items-center gap-2 text-slate-400 tracking-wider">
-            <Clock className="w-4 h-4 text-slate-400" />
-            <span className="text-xs font-bold uppercase tracking-widest text-slate-400">Time Remaining</span>
+          <div className="flex items-center gap-2 text-[#6B7280] tracking-wider">
+            <Clock className="w-4 h-4 text-[#6B7280]" />
+            <span className="text-xs font-bold uppercase tracking-widest text-[#6B7280]">Time Remaining</span>
           </div>
           
           {/* Numbers Area */}
-          <div className="flex items-center gap-2 font-sans antialiased tracking-tight">
-            <span className="text-4xl font-extrabold text-white font-mono">{hours}</span>
-            <span className="text-xl font-bold text-slate-600">:</span>
-            <span className="text-4xl font-extrabold text-white font-mono">{minutes}</span>
-            <span className="text-xl font-bold text-slate-600">:</span>
-            <span className={`text-4xl font-extrabold font-mono transition-colors duration-300 ${percentageLeft <= 15 ? 'text-rose-400' : 'text-white'}`}>
+          <div className={`flex items-center gap-2 font-sans antialiased tracking-tight transition-colors duration-300 ${digitsColor}`}>
+            <span className="text-4xl font-extrabold font-mono">{hours}</span>
+            <span className="text-xl font-bold opacity-60">:</span>
+            <span className="text-4xl font-extrabold font-mono">{minutes}</span>
+            <span className="text-xl font-bold opacity-60">:</span>
+            <span className="text-4xl font-extrabold font-mono">
               {seconds}
             </span>
           </div>
@@ -78,13 +81,13 @@ export const TimerCard = () => {
             {/* Outer Rim Ring */}
             <circle 
               cx="32" cy="32" r="28" 
-              className="stroke-slate-800" 
+              className="stroke-[#E5E7EB]" 
               strokeWidth="2" 
               fill="transparent" 
             />
             
             {/* Subtle Clock Hour Ticks */}
-            <g className="stroke-slate-700" strokeWidth="1.5" strokeLinecap="round">
+            <g className="stroke-[#D1D5DB]" strokeWidth="1.5" strokeLinecap="round">
               <line x1="32" y1="6" x2="32" y2="9" />   {/* 12 o'clock */}
               <line x1="58" y1="32" x2="55" y2="32" /> {/* 3 o'clock */}
               <line x1="32" y1="58" x2="32" y2="55" /> {/* 6 o'clock */}
@@ -109,7 +112,7 @@ export const TimerCard = () => {
             {/* Solid Center Core Pin */}
             <circle 
               cx="32" cy="32" r="2.5" 
-              className={`fill-slate-900 stroke-2 ${clockThemeColor.split(' ')[1]}`} 
+              className={`fill-white stroke-2 ${clockThemeColor.split(' ')[1]}`} 
             />
           </svg>
           

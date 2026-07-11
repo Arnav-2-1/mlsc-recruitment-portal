@@ -8,6 +8,7 @@ import { QuestionPalette } from '../components/quiz/QuestionPalette';
 import { StatsCard } from '../components/quiz/StatsCard';
 import { NavigationBar } from '../components/quiz/NavigationBar';
 import { SecurityModal } from '../components/quiz/SecurityModal';
+import { SubmitModal } from '../components/quiz/SubmitModal';
 import { Card } from '../components/common/Card';
 import { Button } from '../components/common/Button';
 import { Maximize2, ShieldAlert } from 'lucide-react';
@@ -15,6 +16,7 @@ import { Maximize2, ShieldAlert } from 'lucide-react';
 export const Quiz = () => {
   const { candidate, examStarted, examCompleted, triggerWarning } = useExam();
   const navigate = useNavigate();
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
   
   // Track if the app is actively in fullscreen mode
   const [isFullscreenActive, setIsFullscreenActive] = useState(
@@ -150,13 +152,13 @@ export const Quiz = () => {
   // Added overscroll-none utilities here to keep it disabled even when stuck on the interceptor screen
   if (!isFullscreenActive && !examCompleted) {
     return (
-      <div className="fixed inset-0 z-50 bg-[#020617] flex items-center justify-center p-6 select-none overscroll-none touch-none">
-        <Card className="max-w-md w-full border-slate-800 bg-slate-900/40 text-center p-8 shadow-2xl">
-          <div className="mx-auto w-12 h-12 bg-amber-500/10 border border-amber-500/20 rounded-xl flex items-center justify-center text-amber-400 mb-4">
+      <div className="fixed inset-0 z-50 bg-[#F8FAFC] flex items-center justify-center p-6 select-none overscroll-none touch-none">
+        <Card className="max-w-md w-full border-[#E5E7EB] bg-white text-center p-8 shadow-2xl">
+          <div className="mx-auto w-12 h-12 bg-[#F59E0B]/10 border border-[#F59E0B]/20 rounded-xl flex items-center justify-center text-[#b45309] mb-4">
             <ShieldAlert className="w-6 h-6 animate-pulse" />
           </div>
-          <h2 className="text-xl font-black text-slate-100 tracking-wide mb-2">Fullscreen Required</h2>
-          <p className="text-xs text-slate-400 leading-relaxed mb-6">
+          <h2 className="text-xl font-black text-[#111827] tracking-wide mb-2">Fullscreen Required</h2>
+          <p className="text-xs text-[#6B7280] leading-relaxed mb-6">
             The page environment was reloaded or disrupted. To protect evaluation security and resume your assessment session, you must lock the screen context.
           </p>
           <Button variant="primary" onClick={handleRestoreFullscreen} className="w-full py-3 font-semibold text-sm gap-2">
@@ -170,17 +172,20 @@ export const Quiz = () => {
   // STANDARD VIEWPORT: Shown when everything is operating securely
   // Injected overscroll-none and touch-none layout properties globally
   return (
-    <div className="w-full min-h-[calc(100vh-65px)] flex flex-col justify-between bg-[#020617] overscroll-none touch-none">
-      <PageContainer className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 py-6 overscroll-none">
-        <div className="lg:col-span-2"><QuestionCard /></div>
-        <div className="space-y-4">
+    <div className="w-full h-[calc(100vh-65px)] flex flex-col justify-between bg-[#F8FAFC] overscroll-none touch-none overflow-hidden select-none">
+      <div className="flex-1 h-0 w-full max-w-7xl mx-auto px-5 sm:px-8 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6 overflow-hidden">
+        <div className="lg:col-span-2 h-full overflow-hidden flex flex-col">
+          <QuestionCard />
+        </div>
+        <div className="space-y-4 h-full overflow-hidden flex flex-col">
           <TimerCard />
           <StatsCard />
           <QuestionPalette />
         </div>
-      </PageContainer>
-      <NavigationBar />
+      </div>
+      <NavigationBar onSubmitClick={() => setShowSubmitModal(true)} />
       <SecurityModal />
+      <SubmitModal isOpen={showSubmitModal} onClose={() => setShowSubmitModal(false)} />
     </div>
   );
 };

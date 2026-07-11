@@ -8,6 +8,7 @@ import { Quiz } from './pages/Quiz';
 import { Result } from './pages/Result';
 import { DeviceBlocker } from './components/common/DeviceBlocker';
 
+
 function App() {
   
   useEffect(() => {
@@ -52,7 +53,7 @@ function App() {
     <ExamProvider>
       <BrowserRouter>
         <DeviceBlocker>
-          <div className="min-h-screen bg-[#020617] text-slate-100 flex flex-col">
+          <div className="min-h-screen bg-[#F8FAFC] text-[#111827] flex flex-col">
             <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />

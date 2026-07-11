@@ -4,6 +4,8 @@ import { useExam } from '../context/ExamContext';
 import { PageContainer } from '../components/layout/PageContainer';
 import { Checkbox } from '../components/common/Checkbox';
 import { Button } from '../components/common/Button';
+import { Card } from '../components/common/Card';
+import { ShieldAlert, Award, UserCheck } from 'lucide-react';
 import mlsaLogo from '../assets/mlsa-logo.png'; // Path to your logo asset
 
 export const Instructions = () => {
@@ -37,10 +39,10 @@ export const Instructions = () => {
   };
 
   return (
-    <PageContainer className="max-w-4xl py-12 px-6 antialiased text-slate-300">
+    <PageContainer className="max-w-5xl py-12 px-6 antialiased text-[#111827]">
       
       {/* BRANDING & HEADER */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-b border-slate-800 pb-8 mb-10">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-b border-[#E5E7EB] pb-8 mb-10">
         <div className="flex items-center gap-4">
           <img 
             src={mlsaLogo} 
@@ -48,88 +50,136 @@ export const Instructions = () => {
             className="w-16 h-auto object-contain"
           />
           <div>
-            <h1 className="text-xl font-semibold text-white tracking-tight">Microsoft Learn Student Ambassadors</h1>
-            <p className="text-xs text-slate-400 mt-0.5">Official Examination Environment</p>
+            <h1 className="text-xl font-bold text-[#111827] tracking-tight">Microsoft Learn Student Ambassadors</h1>
+            <p className="text-xs text-[#6B7280] mt-0.5">Official Examination Environment</p>
           </div>
         </div>
         
-        <div className="flex gap-4 font-mono text-[11px] text-slate-400 bg-slate-900/50 px-3 py-2 rounded border border-slate-800">
+        <div className="flex gap-4 font-mono text-[11px] text-[#6B7280] bg-white px-3 py-2 rounded-xl border border-[#E5E7EB] shadow-sm">
           {/* ✨ Dynamic question array length tracking output replaces hardcoded 20 values */}
-          <div>QUESTIONS: <span className="text-white font-semibold">{questions?.length || 15}</span></div>
-          <div className="w-px bg-slate-800" />
-          <div>DURATION: <span className="text-white font-semibold">30 MINS</span></div>
+          <div>QUESTIONS: <span className="text-[#0067B8] font-bold">{questions?.length || 15}</span></div>
+          <div className="w-px bg-slate-200" />
+          <div>DURATION: <span className="text-[#0067B8] font-bold">30 MINS</span></div>
         </div>
       </div>
 
       {/* TWO COLUMN GRID LAYOUT */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
         
         {/* LEFT COMPARTMENT: INSTRUCTIONS LIST */}
-        <div className="md:col-span-2 space-y-8">
+        <div className="lg:col-span-2 space-y-8">
           
           {/* Section 1: Security Parameters */}
-          <div className="space-y-3">
-            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Security & Proctoring Policy</h2>
-            <div className="w-full h-px bg-slate-800 mb-2" />
-            <ul className="space-y-2 text-xs text-slate-400 list-disc pl-4 leading-relaxed">
-              <li>This examination enforces mandatory <span className="text-white font-medium">Fullscreen Mode</span>. Attempting to minimize or exit will trigger immediate technical violation parameters.</li>
-              <li>System state operations (tab switches, screen blurs, or secondary window context selection) are actively monitored.</li>
-              <li>Reaching <span className="text-rose-400 font-semibold underline">3 system warnings</span> terminates your test context and submits your current script automatically.</li>
+          <Card className="border-red-100 bg-red-50/20 p-6 sm:p-8 rounded-2xl shadow-sm">
+            <div className="flex items-center gap-3 text-red-600 mb-4">
+              <div className="p-2.5 bg-red-100 rounded-xl">
+                <ShieldAlert className="w-6 h-6" />
+              </div>
+              <h2 className="text-lg sm:text-xl font-extrabold tracking-tight">Security & Proctoring Policy</h2>
+            </div>
+            <div className="h-px bg-red-200/60 w-full mb-5" />
+            <ul className="space-y-4 text-sm sm:text-base text-[#4B5563] leading-relaxed">
+              <li className="flex items-start gap-3">
+                <span className="text-red-500 mt-1 font-bold">✕</span>
+                <span>This examination enforces mandatory <span className="text-red-700 font-semibold">Fullscreen Mode</span>. Attempting to minimize or exit will trigger immediate technical violation warnings.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-red-500 mt-1 font-bold">✕</span>
+                <span>System state operations (tab switches, screen blurs, or secondary window context selection) are actively monitored.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-red-500 mt-1 font-bold">✕</span>
+                <span>Reaching <span className="text-red-600 font-bold underline">3 system warnings</span> terminates your test context and submits your current script automatically.</span>
+              </li>
             </ul>
-          </div>
+          </Card>
 
           {/* Section 2: Evaluation Parameters */}
-          <div className="space-y-3">
-            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Scoring Matrix</h2>
-            <div className="w-full h-px bg-slate-800 mb-2" />
-            <ul className="space-y-2 text-xs text-slate-400 list-disc pl-4 leading-relaxed">
-              <li>Every correctly validated question submission awards <span className="text-emerald-400 font-semibold">+4.00 marks</span>.</li>
-              <li>There is <span className="text-white font-medium">no negative marking penalty</span> calculated for incorrect answers.</li>
-              <li>Unanswered questions skip processing calculations neutrally (<span className="text-slate-500">0.00 marks</span>).</li>
+          <Card className="border-emerald-100 bg-emerald-50/15 p-6 sm:p-8 rounded-2xl shadow-sm">
+            <div className="flex items-center gap-3 text-emerald-600 mb-4">
+              <div className="p-2.5 bg-emerald-100 rounded-xl">
+                <Award className="w-6 h-6" />
+              </div>
+              <h2 className="text-lg sm:text-xl font-extrabold tracking-tight">Scoring Matrix</h2>
+            </div>
+            <div className="h-px bg-emerald-200/60 w-full mb-5" />
+            <ul className="space-y-4 text-sm sm:text-base text-[#4B5563] leading-relaxed">
+              <li className="flex items-start gap-3">
+                <span className="text-emerald-500 mt-1 font-bold">✓</span>
+                <span>Every correctly validated question submission awards <span className="text-emerald-700 font-bold">+4.00 marks</span>.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-emerald-500 mt-1 font-bold">✓</span>
+                <span>There is <span className="text-emerald-700 font-semibold">no negative marking penalty</span> calculated for incorrect answers.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-emerald-500 mt-1 font-bold">✓</span>
+                <span>Unanswered questions skip processing calculations neutrally (<span className="text-slate-500">0.00 marks</span>).</span>
+              </li>
             </ul>
-          </div>
+          </Card>
 
         </div>
 
         {/* RIGHT COMPARTMENT: USER IDENTITY CARD */}
-        <div className="bg-slate-900/30 border border-slate-800/80 rounded p-5 h-fit space-y-4">
-          <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Candidate Validation</h2>
-          
-          <div>
-            <label className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Name</label>
-            <p className="text-sm font-medium text-white mt-0.5">{candidate.fullName}</p>
-          </div>
+        <div className="flex flex-col gap-6">
+          <Card className="border-[#0067B8]/10 bg-gradient-to-b from-white to-blue-50/30 p-6 rounded-2xl shadow-md h-fit space-y-5">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
+              <div className="p-2.5 bg-blue-50 text-[#0067B8] rounded-xl">
+                <UserCheck className="w-6 h-6" />
+              </div>
+              <div>
+                <h2 className="text-sm font-extrabold text-[#111827] tracking-tight">Candidate Identity</h2>
+                <p className="text-[10px] text-[#6B7280] font-medium uppercase tracking-wider">Verification Approved</p>
+              </div>
+            </div>
+            
+            <div className="space-y-3">
+              <div>
+                <label className="text-[10px] uppercase font-bold text-[#6B7280] tracking-wider">Candidate Name</label>
+                <p className="text-base font-bold text-[#111827] mt-0.5">{candidate.fullName}</p>
+              </div>
 
-          <div>
-            <label className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Enrollment / Identifier</label>
-            <p className="text-sm font-semibold text-white font-mono mt-0.5 tracking-tight">{candidate.enrollmentNumber}</p>
-          </div>
+              <div>
+                <label className="text-[10px] uppercase font-bold text-[#6B7280] tracking-wider">Enrollment / Identifier</label>
+                <p className="text-base font-bold text-[#0067B8] font-mono mt-0.5 tracking-tight">{candidate.enrollmentNumber}</p>
+              </div>
+
+              {candidate.college && (
+                <div>
+                  <label className="text-[10px] uppercase font-bold text-[#6B7280] tracking-wider">College / Institution</label>
+                  <p className="text-xs font-semibold text-[#4B5563] mt-0.5 leading-relaxed">{candidate.college}</p>
+                </div>
+              )}
+            </div>
+          </Card>
         </div>
 
       </div>
 
       {/* FOOTER ACCEPTANCE BAR */}
-      <div className="bg-slate-900/20 border border-slate-800/60 rounded p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <Card className="border-[#0067B8]/20 bg-gradient-to-r from-blue-50/50 to-indigo-50/30 p-6 rounded-2xl shadow-md flex flex-col sm:flex-row items-center justify-between gap-6">
         <Checkbox 
           id="agree" 
           label={
-            <span className="text-xs text-slate-400 font-medium select-none cursor-pointer hover:text-slate-300 transition-colors">
+            <span className="text-xs sm:text-sm text-[#4B5563] font-semibold select-none cursor-pointer hover:text-[#111827] transition-colors leading-relaxed">
               I acknowledge the compliance frameworks and am prepared to launch the verified exam environment.
             </span>
           }
           checked={agreed} 
           onChange={(e) => setAgreed(e.target.checked)} 
+          className="flex-1"
         />
         
         <Button 
           variant="primary" 
           disabled={!agreed} 
           onClick={handleStartExam} 
-          className="w-full sm:w-auto px-6 py-2 text-xs font-semibold tracking-wide text-white bg-blue-600 hover:bg-blue-500 disabled:bg-slate-800 disabled:text-slate-500 rounded border border-blue-500/20 shadow-sm transition-all"
+          className="w-full sm:w-auto px-8 py-3.5 text-sm font-bold tracking-wide text-white bg-[#0067B8] hover:bg-[#005A9E] rounded-xl border border-blue-500/10 shadow-lg shadow-blue-900/10 transition-all shrink-0 animate-pulse-subtle"
         >
           Launch Portal Session
         </Button>
-      </div>
+      </Card>
 
     </PageContainer>
   );
