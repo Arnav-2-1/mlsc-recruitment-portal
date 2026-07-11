@@ -6,9 +6,9 @@ export const StatsCard = () => {
   const { questions, responses } = useExam();
   const answered = Object.keys(responses).length;
   return (
-    <Card className="p-4 border-slate-800 bg-slate-900/60">
-      <div className="text-center font-semibold text-slate-300">
-        <span className="text-2xl font-black text-slate-100 font-mono">{answered}</span> / {questions.length} Answered
+    <Card className="p-4 border-[#E5E7EB] bg-white">
+      <div className="text-center font-semibold text-[#6B7280]">
+        <span className="text-2xl font-black text-[#111827] font-mono">{answered}</span> / {questions.length} Answered
       </div>
     </Card>
   );

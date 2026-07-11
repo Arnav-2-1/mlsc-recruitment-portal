@@ -31,27 +31,27 @@ export const DeviceBlocker = ({ children }) => {
 
   if (isMobileOrTablet) {
     return (
-      <div className="fixed inset-0 z-[100] bg-[#040814] flex items-center justify-center p-6 text-center select-none antialiased">
-        <div className="max-w-md w-full border border-slate-800/80 bg-slate-900/40 backdrop-blur-md p-8 rounded-2xl shadow-2xl shadow-black/40 flex flex-col items-center">
+      <div className="fixed inset-0 z-[100] bg-[#F8FAFC] flex items-center justify-center p-6 text-center select-none antialiased">
+        <div className="max-w-md w-full border border-[#E5E7EB] bg-white backdrop-blur-md p-8 rounded-2xl shadow-2xl shadow-black/40 flex flex-col items-center">
           
           {/* Hardware Restriction Icon */}
-          <div className="w-16 h-16 bg-blue-500/10 border-2 border-blue-500/30 rounded-2xl flex items-center justify-center mb-6 shadow-xl shadow-blue-950/40 text-blue-400">
+          <div className="w-16 h-16 bg-[#0067B8]/10 border-2 border-[#0067B8]/25 rounded-2xl flex items-center justify-center mb-6 shadow-xl shadow-blue-950/40 text-[#0067B8]">
             <Laptop className="w-8 h-8 animate-pulse" />
           </div>
 
-          <h1 className="text-2xl font-black text-white tracking-tight mb-3">
+          <h1 className="text-2xl font-black text-[#111827] tracking-tight mb-3">
             Laptop or PC Required
           </h1>
           
-          <p className="text-xs font-semibold text-blue-400 tracking-wide uppercase mb-4">
+          <p className="text-xs font-semibold text-[#0067B8] tracking-wide uppercase mb-4">
             Microsoft Learn Student Chapter
           </p>
 
-          <p className="text-sm text-slate-400 leading-relaxed">
+          <p className="text-sm text-[#6B7280] leading-relaxed">
             To ensure assessment security, proctoring integrity, and compatibility with our development code environment, this evaluation platform cannot be accessed on mobile or tablet devices.
           </p>
 
-          <div className="mt-6 text-xs text-slate-500 font-mono bg-slate-950/60 px-4 py-2 rounded-xl border border-slate-800/60">
+          <div className="mt-6 text-xs text-[#6B7280] font-mono bg-[#F8FAFC] px-4 py-2 rounded-xl border border-[#E5E7EB]">
             Please switch to a desktop browser to proceed.
           </div>
         </div>

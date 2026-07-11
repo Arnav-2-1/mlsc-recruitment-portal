@@ -1,12 +1,23 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 export const Card = ({ children, className = '', ...props }) => {
   return (
-    <div 
-      className={`bg-[#111827] border border-slate-800 rounded-sm p-6 shadow-sm transition-all ${className}`}
+    <motion.div 
+      initial={{ opacity: 0, y: 20, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      whileHover={{ y: -5, scale: 1.012 }}
+      transition={{ 
+        type: 'spring', 
+        stiffness: 260, 
+        damping: 22,
+        y: { duration: 0.2 },
+        scale: { duration: 0.2 }
+      }}
+      className={`bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-sm ${className}`}
       {...props}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };

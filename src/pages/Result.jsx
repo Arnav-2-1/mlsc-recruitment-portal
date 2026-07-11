@@ -32,11 +32,11 @@ export const Result = () => {
   if (!candidate || !examCompleted) return null;
 
   return (
-    <PageContainer className="max-w-2xl py-10 justify-center">
+    <PageContainer className="max-w-4xl py-12 justify-center">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-black text-slate-100">Examination Completed</h2>
+        <h2 className="text-3xl font-extrabold text-[#111827]">Examination Completed</h2>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center p-6 bg-slate-900/40 rounded-xl border border-slate-800 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center p-8 bg-white rounded-2xl border border-[#E5E7EB] shadow-[0_8px_28px_rgba(15,23,42,0.06)] mb-6">
         <div className="flex justify-center"><ScoreCircle percentage={metrics.percentage} /></div>
         <div className="md:col-span-2"><PerformanceCard stats={metrics} /></div>
       </div>
